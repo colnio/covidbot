@@ -1,0 +1,4 @@
+mailru-im-bot
+requests
+schedule
+covid
