@@ -1,13 +1,11 @@
 FROM ubuntu:20.04
 
 RUN apt update
-RUN apt install python3-pip -y && pip3 install -r requirements.txt 
-RUN mkdir -p /usr/src/app
+RUN apt install python3-pip -y 
+COPY requirements.txt ./
+RUN pip3 install -r requirements.txt
 
-WORKDIR /usr/src/app
-
-COPY main.py ./
-RUN yarn install
+WORKDIR /app
 
 COPY . .
 
