@@ -82,8 +82,7 @@ def listen():
         elif msg == '/Russia':
             bot.send_text(chat_id=event.from_chat, text=GetInfo('Russia'))
             send_graph("Russia", event.from_chat)
-            # TODO: place the plotting func here
-            # bot.send_file(chat_id=event.from_chat, file="Russia.jpg")
+            
         else:
             inf = GetInfo(msg)
             print(inf)
@@ -91,7 +90,7 @@ def listen():
                 bot.send_text(chat_id=event.from_chat, text="Простите, такого я не понимаю:(")
             else:
                 bot.send_text(chat_id=event.from_chat, text=inf)
-                # TODO: place the plotting func here
+                
                 send_graph(msg, event.from_chat)
 
 
