@@ -5,14 +5,8 @@ import time
 import ssl
 import os
 
-def update():
-
+def first_run():
     check_file = os.path.exists('сovid_data1.xlsx')
-    if check_file == True:
-        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data1.xlsx')
-        os.remove(path)
-    else: 
-        pass
     print('Beginning file download with urllib2...')
     url = 'https://github.com/owid/covid-19-data/raw/master/public/data/owid-covid-data.xlsx'
     ssl._create_default_https_context = ssl._create_unverified_context
@@ -27,6 +21,29 @@ def update():
         pass
     os.rename('covid_data1.xlsx', 'covid_data.xlsx')
     print('cool')
+
+def update():
+
+    # # check_file = os.path.exists('сovid_data1.xlsx')
+    # # if check_file == True:
+    # #     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data1.xlsx')
+    # #     os.remove(path)
+    # # else: 
+    # #     pass
+    # print('Beginning file download with urllib2...')
+    # url = 'https://github.com/owid/covid-19-data/raw/master/public/data/owid-covid-data.xlsx'
+    # ssl._create_default_https_context = ssl._create_unverified_context
+    # urllib.request.urlretrieve(url, 'covid_data1.xlsx')
+    # print('downloaded')
+    # check_file = os.path.exists('сovid_data.xlsx')
+    # print('check done ', check_file)
+    # if check_file == True:
+    #     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data.xlsx')
+    #     os.remove(path)
+    # else: 
+    #     pass
+    # os.rename('covid_data1.xlsx', 'covid_data.xlsx')
+    # print('cool')
 
 
 
