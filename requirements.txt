@@ -1,4 +1,8 @@
 mailru-im-bot
-requests
 schedule
 covid
+pandas
+scipy
+numpy
+matplotlib
+urllib
