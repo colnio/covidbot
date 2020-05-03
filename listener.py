@@ -10,11 +10,11 @@ TOKEN = "001.3273522775.2055291012:752357883"
 bot = Bot(token=TOKEN)
 
 def send_graph(country, uid):
-    
-    check_file = os.path.exists(country + 'plot.jpg')
+    print("Here at send graph..")
+    check_file = os.path.exists(country + 'plot.png')
     create_new = True
     if check_file:
-        tcreate = os.path.getmtime(country + 'plot.jpg')
+        tcreate = os.path.getmtime(country + 'plot.png')
         tnow = time.time()
         if (tnow - tcreate) / 3600 >= 1:
             pass
@@ -22,13 +22,14 @@ def send_graph(country, uid):
             create_new = False
     if create_new:
         processing.plot(country)
-    bot.send_file(chat_id=uid, file=country+'plot.jpg')
-    bot.send_file(chat_id=uid, file=country+'hist.jpg')    
     
-
-
-
-
+    with open(country+'plot.png', "rb") as file:
+        bot.send_file(chat_id=uid, file=file)
+    
+    
+    # bot.send_file(chat_id=uid, file=country+'hist.jpg')    
+    print("Finished send grpah.")
+    
     
 def listen():
 
@@ -80,6 +81,7 @@ def listen():
             bot.send_text(chat_id=event.from_chat, text=hello_msg)
         elif msg == '/Russia':
             bot.send_text(chat_id=event.from_chat, text=GetInfo('Russia'))
+            send_graph("Russia", event.from_chat)
             # TODO: place the plotting func here
             # bot.send_file(chat_id=event.from_chat, file="Russia.jpg")
         else:
@@ -90,7 +92,7 @@ def listen():
             else:
                 bot.send_text(chat_id=event.from_chat, text=inf)
                 # TODO: place the plotting func here
-                # bot.send_file(chat_id=event.from_chat, file=msg+".jpg")
+                send_graph(msg, event.from_chat)
 
 
     bot.dispatcher.add_handler(MessageHandler(callback=message_cb))
