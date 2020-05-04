@@ -7,7 +7,6 @@ cached-property
 certifi 
 chardet 
 click 
-cloud-init 
 colorama 
 command-not-found
 configobj
