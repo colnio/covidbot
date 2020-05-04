@@ -6,7 +6,11 @@ import processing
 import time
 import os
 import pickle
-
+import random 
+NFILMSALNOE = 0
+NFILMSFAMILY = 3
+NEXPERIMENTS = 0
+NMEMES = 0
 TOKEN = "001.3273522775.2055291012:752357883"
 bot = Bot(token=TOKEN)
 
@@ -72,6 +76,7 @@ def listen():
 Чтобы посмотреть статистику по России: /Russia
 Также ты можешь посмотреть информацию по любой стране,
 просто написав ее название (пока что только на английском).
+А еще мы можем подсказать, как скоротать время: /whattodo
 Удачи и не болейте!"""
 
     
@@ -92,7 +97,42 @@ def listen():
         elif msg == '/Russia':
             bot.send_text(chat_id=event.from_chat, text=GetInfo('Russia'))
             send_graph("Russia", event.from_chat)
-            
+
+        elif msg == "/whattodo":
+            inf = """
+Во время самоизоляции очень важно найти занятие по душе,
+и у нас есть несколько вариантов чтоб вам помочь:)
+Вы можете посмотреть подборку семейных фильмов и сериалов: /familyfilms
+И фильмов для тех, кто остался наедине с собой: /alonefilms
+Ну а если помимо свободного времени у вас
+есть научное любопытство, вы можете посмотреть 
+подборку интересных опытов по физике: /experiments
+Кстати, лайфхак: вы всегда можете поиграть в настолки,
+даже если вы далеко от друзей, многие популярные игры 
+имеют онлайн версии, например, монополия. Проверяли, затягивает:))
+"""
+            bot.send_text(chat_id=event.from_chat, text=inf)
+        
+        elif msg == "/familyfilms":
+            films = []
+            with open("./familyfilms" + str(random.randrange(1, NFILMSFAMILY + 1)) + ".txt", 'r') as f:
+                films = f.read().split('\n')
+            inf = "Вот список фильмов, которые мы рекомендуем посмотреть:\n" + '\n'.join(films)
+            bot.send_text(chat_id=event.from_chat, text=inf)
+
+        elif msg == "/alonefilms":
+            films = []
+            with open("./alonefilms" + str(random.randrange(1, NFILMSALNOE + 1)) + ".txt", 'r') as f:
+                films = f.read().split('\n')
+            inf = "Вот список фильмов, которые мы рекомендуем посмотреть:\n" + '\n'.join(films)
+            bot.send_text(chat_id=event.from_chat, text=inf)
+
+        elif msg == "/experiments":
+            exp = ""
+            with open("./experiments" + str(random.randrange(1, NEXPERIMENTS + 1)) + '.txt', 'r') as f:
+                exp = f.read()
+            bot.send_text(chat_id=event.from_chat, text=exp)
+             
         else:
             inf = GetInfo(msg)
             print(inf)
