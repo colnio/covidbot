@@ -5,6 +5,7 @@ import covid
 import processing
 import time
 import os
+import pickle
 
 TOKEN = "001.3273522775.2055291012:752357883"
 bot = Bot(token=TOKEN)
@@ -74,11 +75,20 @@ def listen():
 Удачи и не болейте!"""
 
     
-
     def message_cb(bot, event):
+        
         msg = event.text 
         if msg == '/start':
+            s = set()
             bot.send_text(chat_id=event.from_chat, text=hello_msg)
+            if os.path.exists("IDs.pckl"):
+                with open("IDs.pckl", "rb") as f:
+                    s = pickle.load(f)
+            s.add(event.from_chat)
+            with open("IDs1.pckl", "wb") as f:
+                pickle.dump(s, file=f)
+            os.rename("IDs1.pckl", "IDs.pckl")
+
         elif msg == '/Russia':
             bot.send_text(chat_id=event.from_chat, text=GetInfo('Russia'))
             send_graph("Russia", event.from_chat)
