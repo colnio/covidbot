@@ -25,6 +25,8 @@ def send_graph(country, uid):
             pass
         else:
             create_new = False
+    country = country if country != '/total' else "World"
+    
     if create_new:
         processing.plot(country)
     
@@ -115,22 +117,28 @@ def listen():
         
         elif msg == "/familyfilms":
             films = []
-            with open("./familyfilms" + str(random.randrange(1, NFILMSFAMILY + 1)) + ".txt", 'r') as f:
+            print("familyflims")
+            with open("./familyfilms/" + str(random.randrange(1, NFILMSFAMILY + 1)) + ".txt", 'r') as f:
                 films = f.read().split('\n')
+                print("File read")
             inf = "Вот список фильмов, которые мы рекомендуем посмотреть:\n" + '\n'.join(films)
             bot.send_text(chat_id=event.from_chat, text=inf)
 
         elif msg == "/alonefilms":
             films = []
-            with open("./alonefilms" + str(random.randrange(1, NFILMSALNOE + 1)) + ".txt", 'r') as f:
+            print("alonefilms")
+            with open("./alonefilms/" + str(random.randrange(1, NFILMSALNOE + 1)) + ".txt", 'r') as f:
                 films = f.read().split('\n')
+                print("file read")
             inf = "Вот список фильмов, которые мы рекомендуем посмотреть:\n" + '\n'.join(films)
             bot.send_text(chat_id=event.from_chat, text=inf)
 
         elif msg == "/experiments":
             exp = ""
-            with open("./experiments" + str(random.randrange(1, NEXPERIMENTS + 1)) + '.txt', 'r') as f:
+            print("experiments")
+            with open("./experiments/" + str(random.randrange(1, NEXPERIMENTS + 1)) + '.txt', 'r') as f:
                 exp = f.read()
+                print("file read")
             bot.send_text(chat_id=event.from_chat, text=exp)
              
         else:
