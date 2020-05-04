@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:18.04
 
 WORKDIR /app
 
@@ -9,6 +9,5 @@ COPY requirements.txt ./
 RUN pip3 install -r requirements.txt
 
 COPY . .
-RUN python3 main.py
 
-CMD ["python3", "./main.py"]
+CMD ["sudo", "python3", "./main.py"]
