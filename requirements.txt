@@ -30,7 +30,6 @@ jsonschema
 keyring
 keyrings.alt
 kiwisolver
-language-selector
 mailru-im-bot
 MarkupSafe
 matplotlib
