@@ -65,7 +65,6 @@ setuptools
 six
 soupsieve
 ssh-import-id
-systemd-python
 Twisted
 ufw
 unattended-upgrades
