@@ -49,7 +49,6 @@ PyJWT
 pyOpenSSL
 pyparsing
 pyserial
-python-apt 
 python-baseconv 
 python-dateutil 
 python-debian
