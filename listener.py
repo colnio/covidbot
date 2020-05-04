@@ -7,8 +7,8 @@ import time
 import os
 import pickle
 import random 
-NFILMSALNOE = 0
-NFILMSFAMILY = 3
+NFILMSALNOE = 35
+NFILMSFAMILY = 45
 NEXPERIMENTS = 0
 NMEMES = 0
 TOKEN = "001.3273522775.2055291012:752357883"
@@ -79,6 +79,9 @@ def listen():
 Также ты можешь посмотреть информацию по любой стране,
 просто написав ее название (пока что только на английском).
 А еще мы можем подсказать, как скоротать время: /whattodo
+Ссылка на официальные ресурсы: /resources
+Новости можно посмотреть здесь: /news
+Посмотреть симптомы коронавируса: /symptoms
 Удачи и не болейте!"""
 
     
@@ -99,6 +102,29 @@ def listen():
         elif msg == '/Russia':
             bot.send_text(chat_id=event.from_chat, text=GetInfo('Russia'))
             send_graph("Russia", event.from_chat)
+
+        elif msg == '/news':
+            inf = """
+Последние новости о коронавирусе можно посмотреть на этих сайтах:
+https://стопкоронавирус.рф
+https://www.rbc.ru/society/04/05/2020/5e2fe9459a79479d102bada6#
+https://www.bbc.com/russian/news-52528528
+"""
+        elif msg == '/resources':
+            inf = """
+Информациб по миру мы берем отсюда: https://coronavirus.jhu.edu/map.html
+Последнюю статистику по России можно посмотреть здесь: https://стопкоронавирус.рф
+"""
+            bot.send_text(chat_id=event.from_chat, text=inf)
+
+        elif "/q" in msg:
+            return
+
+        elif msg == '/symptoms':
+
+            with open('./simptomy_kv.png', "rb") as file:
+                bot.send_file(chat_id=event.from_chat, file=file)
+
 
         elif msg == "/whattodo":
             inf = """
