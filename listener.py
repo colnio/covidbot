@@ -26,6 +26,7 @@ def send_graph(country, uid):
         else:
             create_new = False
     country = country if country != '/total' else "World"
+    country = country if country != "US" else "United States"
     
     if create_new:
         processing.plot(country)
