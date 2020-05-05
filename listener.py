@@ -9,7 +9,7 @@ import pickle
 import random 
 NFILMSALNOE = 35
 NFILMSFAMILY = 45
-NEXPERIMENTS = 0
+NEXPERIMENTS = 9
 NMEMES = 0
 TOKEN = "001.3273522775.2055291012:752357883"
 bot = Bot(token=TOKEN)
@@ -82,7 +82,8 @@ def listen():
 Ссылка на официальные ресурсы: /resources
 Новости можно посмотреть здесь: /news
 Посмотреть симптомы коронавируса: /symptoms
-Удачи и не болейте!"""
+Получить оригинальные стикеры: /stickers
+Удачи!"""
 
     
     def message_cb(bot, event):
@@ -140,6 +141,11 @@ https://www.bbc.com/russian/news-52528528
 имеют онлайн версии, например, монополия. Проверяли, затягивает:))
 """
             bot.send_text(chat_id=event.from_chat, text=inf)
+
+        elif msg == '/stickers':
+            print("Trying to send sticker")
+            bot.send_text(chat_id=event.from_chat, text="cicq.org/s/b3DzmMRhqz")
+            print("Sticker sent")
         
         elif msg == "/familyfilms":
             films = []
