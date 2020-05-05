@@ -7,6 +7,7 @@ import time
 import os
 import pickle
 import random 
+import pandas as pd
 NFILMSALNOE = 35
 NFILMSFAMILY = 45
 NEXPERIMENTS = 9
@@ -37,7 +38,11 @@ def send_graph(country, uid):
     
     # bot.send_file(chat_id=uid, file=country+'hist.jpg')    
     print("Finished send grpah.")
-    
+
+id_user = []
+que_user = []
+ans_user = []  
+
     
 def listen():
 
@@ -112,6 +117,8 @@ https://стопкоронавирус.рф
 https://www.rbc.ru/society/04/05/2020/5e2fe9459a79479d102bada6#
 https://www.bbc.com/russian/news-52528528
 """
+            bot.send_text(chat_id=event.from_chat, text=inf)
+
         elif msg == '/resources':
             inf = """
 Информациб по миру мы берем отсюда: https://coronavirus.jhu.edu/map.html
@@ -119,8 +126,48 @@ https://www.bbc.com/russian/news-52528528
 """
             bot.send_text(chat_id=event.from_chat, text=inf)
 
-        elif "/q" in msg:
-            return
+        elif '/q' in msg:
+
+            print('quiz started')
+        
+            Data_1 = pd.read_excel('Questions 2.xlsx')
+
+            Que = Data_1['Questions']
+            ans1 = Data_1['Ans_1']
+            ans2 = Data_1['Ans_2']
+            ans3 = Data_1['Ans_3']
+            for i in range(len(Data_1.iloc[1])):
+                for j in range(len(Data_1['Ans_1'])):
+                    Data_1.iloc[j,i] = str(Data_1.iloc[j,i])
+
+
+            for i in range(len(Que)):
+                k = i-1
+
+                if '/qz%d'%k in event.text:
+                    bot.send_text(chat_id=event.from_chat, text = '%s\n/qz%d1 %s \n/qz%d2 %s \n /qz%d3 %s'%(Que[i], i, ans1[i], i, ans2[i], i, ans3[i]))
+                    id_user.append(event.from_chat)
+                    que_user.append(Que[i])
+                    ans_user.append(event.text)
+
+                elif '/qz%d'%(len(Que) - 1) in event.text:
+                    bot.send_text(chat_id=event.from_chat, text = 'Вы молодец!')
+                    id_user.append(event.from_chat)
+                    que_user.append(Que[i])
+                    ans_user.append(event.text)
+                    break
+
+
+                elif event.text == '/quiz' and i == 0:
+                    bot.send_text(chat_id=event.from_chat, text = '%s\n/qz%d1 %s \n/qz%d2 %s \n /qz%d3 %s'%(Que[0], 0, ans1[0], 0, ans2[0], 0, ans3[0]))
+                    
+                    id_user.append(event.from_chat)
+                    que_user.append(Que[i])
+                    ans_user.append(event.text)
+            print(id_user)
+            print(que_user)
+            print(ans_user)
+
 
         elif msg == '/symptoms':
 
