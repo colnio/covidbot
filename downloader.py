@@ -6,20 +6,20 @@ import ssl
 import os
 
 def first_run():
-    check_file = os.path.exists('covid_data1.xlsx')
+    check_file = os.path.exists('covid_data1.csv')
     print('Beginning file download with urllib2...')
-    url = 'https://github.com/owid/covid-19-data/raw/master/public/data/owid-covid-data.xlsx'
+    url = 'https://github.com/owid/covid-19-data/raw/master/public/data/owid-covid-data.csv'
     ssl._create_default_https_context = ssl._create_unverified_context
-    urllib.request.urlretrieve(url, 'covid_data1.xlsx')
+    urllib.request.urlretrieve(url, 'covid_data1.csv')
     print('downloaded')
-    check_file = os.path.exists('covid_data.xlsx')
+    check_file = os.path.exists('covid_data.csv')
     print('check done ', check_file)
     if check_file == True:
-        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data.xlsx')
+        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data.csv')
         os.remove(path)
     else: 
         pass
-    os.rename('covid_data1.xlsx', 'covid_data.xlsx')
+    os.rename('covid_data1.csv', 'covid_data.csv')
     print('cool')
 
 def update():
@@ -50,25 +50,25 @@ def update():
 
 
     def downloading():
-        check_file = os.path.exists('сovid_data1.xlsx')
+        check_file = os.path.exists('сovid_data1.csv')
         if check_file == True:
-            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data1.xlsx')
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data1.csv')
             os.remove(path)
         else: 
             pass
         print('Beginning file download with urllib2...')
-        url = 'https://github.com/owid/covid-19-data/raw/master/public/data/owid-covid-data.xlsx'
+        url = 'https://github.com/owid/covid-19-data/raw/master/public/data/owid-covid-data.csv'
         ssl._create_default_https_context = ssl._create_unverified_context
-        urllib.request.urlretrieve(url, 'covid_data1.xlsx')
+        urllib.request.urlretrieve(url, 'covid_data1.csv')
         print('downloaded')
-        check_file = os.path.exists('covid_data.xlsx')
+        check_file = os.path.exists('covid_data.csv')
         print('check done ', check_file)
         if check_file == True:
-            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data.xlsx')
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data.csv')
             os.remove(path)
         else: 
             pass
-        os.rename('covid_data1.xlsx', 'covid_data.xlsx')
+        os.rename('covid_data1.xlsx', 'covid_data.csv')
         print('cool')
 
 

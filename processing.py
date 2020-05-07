@@ -12,9 +12,6 @@ from scipy.optimize import curve_fit
 import matplotlib.ticker as ticker
  
  
- 
- 
- 
 # print('Вводи по английский с большой буквы')
 # country = input()
 def plot(country):
@@ -22,7 +19,7 @@ def plot(country):
     
     
     #считываем данные
-    data = pandas.read_excel('covid_data.xlsx')
+    data = pandas.read_csv('covid_data.csv')
     data.head()
     
     data['date'] = pandas.to_datetime(data['date'])
