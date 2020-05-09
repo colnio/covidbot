@@ -68,7 +68,7 @@ def update():
             os.remove(path)
         else: 
             pass
-        os.rename('covid_data1.xlsx', 'covid_data.csv')
+        os.rename('covid_data1.csv', 'covid_data.csv')
         print('cool')
 
 
@@ -77,7 +77,7 @@ def update():
     schedule.every().day.at("09:00").do(downloading)
     schedule.every().day.at("10:00").do(downloading)
     schedule.every().day.at("11:00").do(downloading)
-    schedule.every().day.at("12:00").do(downloading)
+    schedule.every().day.at("12:12").do(downloading)
     schedule.every().day.at("13:00").do(downloading)
     schedule.every().day.at("14:00").do(downloading)
     schedule.every().day.at("15:00").do(downloading)
