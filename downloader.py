@@ -6,68 +6,52 @@ import ssl
 import os
 
 def first_run():
-    check_file = os.path.exists('covid_data1.csv')
-    print('Beginning file download with urllib2...')
+    check_file = os.path.exists('сovid_data1.csv')
+    if check_file == True:
+        print('covid_data1 exist')
+        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data1.csv')
+        os.remove(path)
+    else: 
+        print('covid_data1 doesnt exist')
+    print('Beginning file download')
     url = 'https://github.com/owid/covid-19-data/raw/master/public/data/owid-covid-data.csv'
     ssl._create_default_https_context = ssl._create_unverified_context
     urllib.request.urlretrieve(url, 'covid_data1.csv')
-    print('downloaded')
+    print('downloaded covid_data1')
     check_file = os.path.exists('covid_data.csv')
-    print('check done ', check_file)
     if check_file == True:
+        print('covid_data exist, I will delete it')
         path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data.csv')
         os.remove(path)
     else: 
-        pass
+        print('covid_data doesnt exist')
+    print('I will rename')
     os.rename('covid_data1.csv', 'covid_data.csv')
     print('cool')
 
+
 def update():
-
-    # # check_file = os.path.exists('covid_data1.xlsx')
-    # # if check_file == True:
-    # #     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data1.xlsx')
-    # #     os.remove(path)
-    # # else: 
-    # #     pass
-    # print('Beginning file download with urllib2...')
-    # url = 'https://github.com/owid/covid-19-data/raw/master/public/data/owid-covid-data.xlsx'
-    # ssl._create_default_https_context = ssl._create_unverified_context
-    # urllib.request.urlretrieve(url, 'covid_data1.xlsx')
-    # print('downloaded')
-    # check_file = os.path.exists('covid_data.xlsx')
-    # print('check done ', check_file)
-    # if check_file == True:
-    #     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data.xlsx')
-    #     os.remove(path)
-    # else: 
-    #     pass
-    # os.rename('covid_data1.xlsx', 'covid_data.xlsx')
-    # print('cool')
-
-
-
-
-
     def downloading():
         check_file = os.path.exists('сovid_data1.csv')
         if check_file == True:
+            print('covid_data1 exist')
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data1.csv')
             os.remove(path)
         else: 
-            pass
-        print('Beginning file download with urllib2...')
+            print('covid_data1 doesnt exist')
+        print('Beginning file download')
         url = 'https://github.com/owid/covid-19-data/raw/master/public/data/owid-covid-data.csv'
         ssl._create_default_https_context = ssl._create_unverified_context
         urllib.request.urlretrieve(url, 'covid_data1.csv')
-        print('downloaded')
+        print('downloaded covid_data1')
         check_file = os.path.exists('covid_data.csv')
-        print('check done ', check_file)
         if check_file == True:
+            print('covid_data exist, I will delete it')
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'covid_data.csv')
             os.remove(path)
         else: 
-            pass
+            print('covid_data doesnt exist')
+        print('I will rename')
         os.rename('covid_data1.csv', 'covid_data.csv')
         print('cool')
 
@@ -77,7 +61,7 @@ def update():
     schedule.every().day.at("09:00").do(downloading)
     schedule.every().day.at("10:00").do(downloading)
     schedule.every().day.at("11:00").do(downloading)
-    schedule.every().day.at("12:12").do(downloading)
+    schedule.every().day.at("12:00").do(downloading)
     schedule.every().day.at("13:00").do(downloading)
     schedule.every().day.at("14:00").do(downloading)
     schedule.every().day.at("15:00").do(downloading)
