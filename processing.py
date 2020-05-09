@@ -80,57 +80,129 @@ def plot(country):
     days1 = np.arange(1,amount-start_new+1)
     
     
-    #Апроксимация
-    
-    #коэффициенты
-    beta_opt1, beta_cov1 = curve_fit(f, days1, Infected_2)
-    a = beta_opt1[0]
-    b = beta_opt1[1]
-    c = beta_opt1[2]
-    
-    #получим погрешности для коэффициентов
-    sigma_a = np.sqrt(beta_cov1[0,0])
-    sigma_b = np.sqrt(beta_cov1[1,1])
-    sigma_c = np.sqrt(beta_cov1[2,2])
-    
-    residuals1 = Infected_2 - f(days1,*beta_opt1)
-    fres1 = sum(residuals1**2)
-    Stand_error = np.sqrt(fres1/len(days1))
-    
-    fig, ax = plt.subplots(figsize=(15, 12))
-    
-    past = min(data['date'].iloc[start+start_new:end])
-    now = max(data['date'].iloc[start+start_new:end]) + dt.timedelta(days=1)
-    days2 = mdates.drange(past,now,dt.timedelta(days=1))
-    
-    delta = days2[0] - 1
-    beta_opt2 = np.array([a,b-delta * a,c])
-    
-    ax.plot(days2, f(days2, *beta_opt2), 'coral', lw=2)
-    
-    lgnd = ax.legend([' ~(˘▾˘~) Аппроксимация экспонентой дает ошибку $\pm$ %d людей' % Stand_error ], loc='upper left', shadow=True)
-    
-    ax.set_title('Зараженные в  %s (дата)      from %s to %s' % (country, min(data['date'].iloc[start+start_new:end]).strftime("%d.%m"), max(data['date'].iloc[start+start_new:end]).strftime("%d.%m")))
-    ax.set_ylabel('Infected')
-    ax.set_xlabel('Date (day.month)')
-    
-    ax.grid(which='major',
-            color = 'k')
-    
-    ax.minorticks_on()
-    
-    ax.grid(which='minor',
-            color = 'gray',
-            linestyle = ':', linewidth = 0.5)
-    
-    ax.grid(which='major', linewidth = 0.5)
-    
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d.%m'))
-    plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=date_interval))
-    plt.errorbar(days2, Infected_2, fmt = 'ro', markersize = '2', yerr = Stand_error, capsize = 2, elinewidth = 2, capthick = 1, ecolor = 'violet')
-    plt.gcf().autofmt_xdate()
-    plt.savefig('%splot.png' % country, dpi=400, quality=100)
-    plt.show()
+#Апроксимация
+
+
+#коэффициенты
+        try:
+        beta_opt1, beta_cov1 = curve_fit(f, days1, Infected_2)
+        a = beta_opt1[0]
+        b = beta_opt1[1]
+        c = beta_opt1[2]
+
+        print('a = ', a)
+        print('b = ', b)
+        print('c = ', c)
+
+
+        #получим погрешности для коэффициентов
+        sigma_a = np.sqrt(beta_cov1[0,0])
+        sigma_b = np.sqrt(beta_cov1[1,1])
+        sigma_c = np.sqrt(beta_cov1[2,2])
+
+        print('sigma_a = ', sigma_a)
+        print('sigma_b = ', sigma_b)
+        print('sigma_c = ', sigma_c)
+
+
+        residuals1 = Infected_2 - f(days1,*beta_opt1)
+        fres1 = sum(residuals1**2)
+        Stand_error = np.sqrt(fres1/len(days1))
+        print('Stand_error = ', Stand_error)
+
+        print('Relative S_r a = % ', 100* sigma_a/a)
+        print('Relative S_r b = % ', 100* sigma_b/abs(b))
+        print('Relative S_r c = % ', 100* sigma_c/abs(c))
+
+
+        fig, ax = plt.subplots(figsize=(15, 12))
+
+        past = min(data['date'].iloc[start+start_new:end])
+        now = max(data['date'].iloc[start+start_new:end]) + dt.timedelta(days=1)
+        days2 = mdates.drange(past,now,dt.timedelta(days=1))
+
+
+        delta = days2[0] - 1
+        beta_opt2 = np.array([a,b-delta * a,c])
+
+
+
+        ax.plot(days2, f(days2, *beta_opt2), 'coral', lw=2)
+
+
+        lgnd = ax.legend(['We gonna chill ~(˘▾˘~) with error $\pm$ %d people' % Stand_error ], loc='upper left', shadow=True)
+
+        ax.set_title('Infected in %s (date)      from %s to %s' % (country, min(data['date'].iloc[start+start_new:end]).strftime("%d.%m"), max(data['date'].iloc[start+start_new:end]).strftime("%d.%m")))
+        ax.set_ylabel('Infected')
+        ax.set_xlabel('Date (day.month)')
+
+        ax.grid(which='major',
+        color = 'k')
+
+        ax.minorticks_on()
+
+        ax.grid(which='minor',
+        color = 'gray',
+        linestyle = ':', linewidth = 0.5)
+
+        ax.grid(which='major', linewidth = 0.5)
+
+
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d.%m'))
+        plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=date_interval))
+        plt.errorbar(days2, Infected_2, fmt = 'ro', markersize = '2', yerr = 0, capsize = 2, elinewidth = 2, capthick = 1, ecolor = 'violet')
+
+        plt.gcf().autofmt_xdate()
+        plt.savefig('infected2.pdf')
+        plt.show()
+
+    except RuntimeError:
+
+        fig, ax = plt.subplots(figsize=(15, 12))
+
+        past = min(data['date'].iloc[start+start_new:end])
+        now = max(data['date'].iloc[start+start_new:end]) + dt.timedelta(days=1)
+        days2 = mdates.drange(past,now,dt.timedelta(days=1))
+
+
+        delta = days2[0] - 1
+        # beta_opt2 = np.array([a,b-delta * a,c])
+
+
+
+        # ax.plot(days2, f(days2, *beta_opt2), 'coral', lw=2)
+        #ax.plot(days2, Infected, 'coral', lw=2)
+        #ax.scatter(days2, Infected, s = 1, c = 'red')
+        # lgnd = ax.legend(['We gonna chill ~(˘▾˘~) with error $\pm$ %d people' % Stand_error ], loc='upper left', shadow=True)
+
+        ax.set_title('Infected in %s (date)      from %s to %s' % (country, min(data['date'].iloc[start+start_new:end]).strftime("%d.%m"), max(data['date'].iloc[start+start_new:end]).strftime("%d.%m")))
+        ax.set_ylabel('Infected')
+        ax.set_xlabel('Date (day.month)')
+
+        ax.grid(which='major',
+                color = 'k')
+
+        ax.minorticks_on()
+
+        ax.grid(which='minor',
+                color = 'gray',
+                linestyle = ':', linewidth = 0.5)
+
+        ax.grid(which='major', linewidth = 0.5)
+
+
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d.%m'))
+        plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=date_interval))
+        plt.errorbar(days2, Infected_2, fmt = 'ro', markersize = '2', yerr = 0, capsize = 2, elinewidth = 2, capthick = 1, ecolor = 'violet')
+
+        plt.gcf().autofmt_xdate()
+        plt.savefig('%splot.png' % country, dpi=400, quality=100)
+        plt.show()
+
+
+
+
+
  
  
  
