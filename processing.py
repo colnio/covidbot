@@ -84,7 +84,7 @@ def plot(country):
 
 
 #коэффициенты
-        try:
+    try:
         beta_opt1, beta_cov1 = curve_fit(f, days1, Infected_2)
         a = beta_opt1[0]
         b = beta_opt1[1]
