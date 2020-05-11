@@ -131,7 +131,7 @@ def plot(country):
 
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d.%m'))
         plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=date_interval))
-        plt.errorbar(days2, Infected_2, fmt = 'ro', markersize = '2', yerr = 0, capsize = 2, elinewidth = 2, capthick = 1, ecolor = 'violet')
+        plt.errorbar(days2, Infected_2, fmt = 'ro', markersize = '2', yerr = Stand_error, capsize = 2, elinewidth = 2, capthick = 1, ecolor = 'violet')
 
         plt.gcf().autofmt_xdate()
         plt.savefig('%splot.png' % country, dpi=400, quality=100)
@@ -167,7 +167,7 @@ def plot(country):
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d.%m'))
         plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=date_interval))
         plt.errorbar(days2, Infected_2, fmt = 'ro', markersize = '2', yerr = 0, capsize = 2, elinewidth = 2, capthick = 1, ecolor = 'violet')
-
+        ax.plot(days2, Infected_2, 'coral', lw=2)
         plt.gcf().autofmt_xdate()
         plt.savefig('%splot.png' % country, dpi=400, quality=100)
         plt.show()
